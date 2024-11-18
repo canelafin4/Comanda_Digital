@@ -17,8 +17,6 @@ public class Cozinheiro {
     private Long userId;
 
     private String userName;
-
-    private String status;
     
     private String senha;
 }

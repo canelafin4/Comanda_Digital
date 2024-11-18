@@ -30,8 +30,7 @@ public class CozinheiroService {
     public Optional<Cozinheiro> updateCozinheiro(Long id, Cozinheiro cozinheiroDetails) {
         return cozinheiroRepository.findById(id).map(cozinheiro -> {
             cozinheiro.setUserName(cozinheiroDetails.getUserName());
-            cozinheiro.setStatus(cozinheiroDetails.getStatus());
-            cozinheiro.setSenha(cozinheiroDetails.getSenha()); // Atualiza a senha
+            cozinheiro.setSenha(cozinheiroDetails.getSenha());
             return cozinheiroRepository.save(cozinheiro);
         });
     }

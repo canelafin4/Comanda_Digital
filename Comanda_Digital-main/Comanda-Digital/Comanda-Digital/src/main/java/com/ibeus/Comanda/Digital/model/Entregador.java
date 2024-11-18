@@ -19,5 +19,4 @@ public class Entregador {
 
     private String veiculo;
 
-    private String status;
 }

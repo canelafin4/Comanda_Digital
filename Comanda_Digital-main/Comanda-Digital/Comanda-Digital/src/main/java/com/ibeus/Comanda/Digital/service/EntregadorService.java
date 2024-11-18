@@ -35,7 +35,6 @@ public class EntregadorService {
         Optional<Entregador> optionalEntregador = entregadorRepository.findById(id);
         if (optionalEntregador.isPresent()) {
             Entregador entregador = optionalEntregador.get();
-            entregador.setStatus(novoStatus);
             return entregadorRepository.save(entregador);
         }
         throw new RuntimeException("Entregador não encontrado.");

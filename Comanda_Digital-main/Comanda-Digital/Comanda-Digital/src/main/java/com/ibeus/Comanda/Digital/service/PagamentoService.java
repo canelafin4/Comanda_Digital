@@ -10,18 +10,16 @@ import java.util.List;
 @Service
 public class PagamentoService {
 
-    // Retorna as opções de pagamento disponíveis
     public List<String> getOpcoesPagamento() {
-        return Arrays.asList("Cartão de Crédito", "Cartão de Débito", "Pix", "Dinheiro");
+        return Arrays.asList("Cartão de Crédito", "Cartão de Débito", "Pix");
     }
-
-    // Processa o pagamento com base no tipo selecionado
+    
     public Pagamento processarPagamento(String tipoPagamento) {
         List<String> opcoesValidas = getOpcoesPagamento();
         if (opcoesValidas.contains(tipoPagamento)) {
             return new Pagamento(tipoPagamento, "Pagamento finalizado com sucesso.");
         } else {
-            return null; // Retorna null se o tipo de pagamento for inválido
+            return null; 
         }
     }
 }

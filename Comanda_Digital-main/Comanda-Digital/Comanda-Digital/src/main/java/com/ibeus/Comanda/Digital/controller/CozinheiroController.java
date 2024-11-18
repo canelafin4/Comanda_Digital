@@ -47,7 +47,6 @@ public class CozinheiroController {
         if (optionalCozinheiro.isPresent()) {
             Cozinheiro cozinheiro = optionalCozinheiro.get();
             cozinheiro.setUserName(cozinheiroDetails.getUserName());
-            cozinheiro.setStatus(cozinheiroDetails.getStatus());
             cozinheiro.setSenha(cozinheiroDetails.getSenha()); // Atualiza a senha
 
             Cozinheiro updatedCozinheiro = cozinheiroRepository.save(cozinheiro);
