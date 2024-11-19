@@ -1,17 +1,17 @@
 package com.ibeus.Comanda.Digital.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ibeus.Comanda.Digital.model.Pagamento;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Service
 public class PagamentoService {
 
     public List<String> getOpcoesPagamento() {
-        return Arrays.asList("Cartão de Crédito", "Cartão de Débito", "Pix");
+        return Arrays.asList("Cartão de Crédito", "Cartão de Débito", "Pix"); //eu prevejo o nathan me mandado colocar dinheiro dnv aqui 
     }
     
     public Pagamento processarPagamento(String tipoPagamento) {

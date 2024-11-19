@@ -1,42 +1,28 @@
 package com.ibeus.Comanda.Digital.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
+@Table(name = "carrinho")
+@Data
 public class Carrinho {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idItem; 
+    //tirei o id cliente pq tava dando erro #sorry
+    @ManyToOne
+    @JoinColumn(name = "id_prato", referencedColumnName = "id", nullable = false)
+    private Prato prato;
 
-    private String nomeProduto;
-    private int quantidade;
-
-    // Getters e Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNomeProduto() {
-        return nomeProduto;
-    }
-
-    public void setNomeProduto(String nomeProduto) {
-        this.nomeProduto = nomeProduto;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
+    @Column(nullable = false)
+    private Integer quantidade;
 }

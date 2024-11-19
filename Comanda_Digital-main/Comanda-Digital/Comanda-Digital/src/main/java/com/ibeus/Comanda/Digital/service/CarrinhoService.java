@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ibeus.Comanda.Digital.model.Carrinho;
+import com.ibeus.Comanda.Digital.model.Prato;
 import com.ibeus.Comanda.Digital.repository.CarrinhoRepository;
+import com.ibeus.Comanda.Digital.repository.PratoRepository;
 
 @Service
 public class CarrinhoService {
@@ -14,32 +16,44 @@ public class CarrinhoService {
     @Autowired
     private CarrinhoRepository carrinhoRepository;
 
-    public List<Carrinho> findAll() {
+    @Autowired
+    private PratoRepository pratoRepository;
+
+    public List<Carrinho> listarTodos() {
         return carrinhoRepository.findAll();
     }
 
-    // Atualiza a quantidade de itens no carrinho
-    public Carrinho updateQuantidade(Long id, int quantidade) {
-        Carrinho carrinho = carrinhoRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Carrinho não encontrado com o ID: " + id));
+    public Carrinho adicionarPratoAoCarrinho(Long pratoId, Integer quantidade) {
+        Prato prato = pratoRepository.findById(pratoId)
+                .orElseThrow(() -> new RuntimeException("Prato não encontrado!"));
 
-        carrinho.setQuantidade(quantidade);
-        return carrinhoRepository.save(carrinho);
-    }
+        Carrinho carrinhoExistente = carrinhoRepository.findAll().stream()
+                .filter(c -> c.getPrato().getId().equals(pratoId))
+                .findFirst()
+                .orElse(null);
 
-    // Adiciona um pedido ao carrinho
-    public Carrinho addPedido(Long id, int quantidade) {
-        Carrinho carrinho = carrinhoRepository.findById(id).orElse(new Carrinho());
-        carrinho.setId(id);
-        carrinho.setQuantidade(quantidade);
-        return carrinhoRepository.save(carrinho);
-    }
-
-    // Remove um pedido do carrinho
-    public void deletePedido(Long id) {
-        if (!carrinhoRepository.existsById(id)) {
-            throw new IllegalArgumentException("Carrinho não encontrado com o ID: " + id);
+        if (carrinhoExistente != null) {
+            carrinhoExistente.setQuantidade(carrinhoExistente.getQuantidade() + quantidade);
+            return carrinhoRepository.save(carrinhoExistente);
+        } else {
+            Carrinho novoItem = new Carrinho();
+            novoItem.setPrato(prato);
+            novoItem.setQuantidade(quantidade);
+            return carrinhoRepository.save(novoItem);
         }
-        carrinhoRepository.deleteById(id);
+    }
+
+    public Carrinho atualizarQuantidade(Long idItem, Integer quantidade) {
+        Carrinho carrinho = carrinhoRepository.findById(idItem)
+                .orElseThrow(() -> new RuntimeException("Item do carrinho não encontrado!"));
+        carrinho.setQuantidade(quantidade);
+        return carrinhoRepository.save(carrinho);
+    }
+
+    public void deletarItem(Long idItem) {
+        if (!carrinhoRepository.existsById(idItem)) {
+            throw new RuntimeException("Item do carrinho não encontrado!");
+        }
+        carrinhoRepository.deleteById(idItem);
     }
 }
