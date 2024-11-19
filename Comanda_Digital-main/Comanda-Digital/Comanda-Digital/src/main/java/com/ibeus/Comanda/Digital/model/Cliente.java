@@ -1,6 +1,10 @@
 package com.ibeus.Comanda.Digital.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
@@ -20,12 +24,10 @@ public class Cliente {
 
     private String endereco;
 
-    // Método para atualizar o endereço do cliente
     public void atualizarEndereco(String novoEndereco) {
         this.endereco = novoEndereco;
     }
 
-    // Método para trocar a senha
     public void trocarSenha(String novaSenha) {
         this.password = novaSenha;
     }
